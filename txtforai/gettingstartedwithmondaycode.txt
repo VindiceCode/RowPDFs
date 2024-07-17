@@ -1,0 +1,164 @@
+Get started with monday code
+Learn how to enable monday code on your account, deploy your first app, and manage your app deployments
+
+Suggest Edits
+Installing the CLI and SDK to use monday-code
+Deploying your app to monday-code
+Storing client data with your app (both sensitive and not)
+Configuring environment variables
+Logging messages with the in-built logging service
+Using your app locally
+📘
+Prefer to start with a code sample?
+
+Install the monday code quickstart app from Github: @mondaycom/welcome-apps
+
+Getting started
+Enabling the feature
+You'll need to first enable monday code on your monday account. To do this:
+
+Create a new app or open an existing one
+Open the "Hosting" page
+Click "Connect monday code" and accept the terms & conditions
+You can see these steps in the video below:
+
+
+Installing the CLI and SDK
+To use monday code, you'll need to install the monday apps CLI (command line interface) and the SDK (software development kit).
+
+Command line interface
+You can install the CLI globally through npm by running npm install -g @mondaycom/apps-cli.
+Run mapps help to test that it worked. You should receive a list of supported commands.
+Once installed, run mapps init and add your API token once prompted. Learn how to get your monday.com API token here.
+Click here for documentation about the monday code CLI.
+
+Software development kit
+When adding monday code to an existing app, navigate to your app's directory and run npm i @mondaycom/apps-sdk to add it as a dependency.
+
+Click here to see full documentation about the SDK.
+
+🚧
+JavaScript SDK
+
+We currently only support the Javascript SDK but hope to support more languages in the future!
+
+Deploying your app for the first time
+Once you're ready to deploy your app:
+
+Use the mapps code:push command to deploy it to monday servers.
+If you haven't built an app but want to test the deployment process, use our Github Integration built for monday code to test it.
+After deployment
+Connecting your features from the hosting page
+The hosting page gives you quick access to connecting your features to monday code. You'll see all your app features. When you click New Build, you can select an endpoint to connect the feature to:
+
+
+
+Get your deployment URL
+Once you deploy your app, you'll see the deployment URL on the hosting page. You can use this URL to point to any external services that need to connect to your app:
+
+
+
+Check your deployment's status
+Check the status of all your app's deployments with the following command:
+
+$ mapps code:status -i <APP_VERSION_ID>
+
+Check logs
+All logs using the CLI mapps code:logs command can be found using:
+
+$ mapps code:logs -i <APP_VERSION_ID>
+
+Using monday-code's features
+monday-code ships with a number of features to make your development process easy.
+
+Storing data
+We offer two key-value storage APIs for your app to persist data on behalf of a customer. You need to have an access token for a given user (either an OAuth token or an integration shortLivedToken) to use these APIs.
+
+Storage API
+Here's a typical use of the storage API in your app:
+
+JavaScript
+
+import { Storage } from '@mondaycom/apps-sdk';
+
+const storage = new Storage('<ACCESS_TOKEN>');
+
+// set value
+const { version } = await storage.set(key, value, { previousVersion, shared });
+// retrieve value
+const storedValue = await storage.get(key, { shared });
+// delete value
+await storage.delete(key, { shared });
+Secure storage API
+The secure storage API works very similarly but is an encrypted store for sensitive information like API keys and PII. You can use it like this:
+
+JavaScript
+
+import { SecureStorage } from '@mondaycom/apps-sdk';
+const secureStorage = new SecureStorage();
+
+// set value
+await secureStorage.set(key, value);
+// retrieve value
+const storedValue = await secureStorage.get(key);
+// delete value
+await secureStorage.delete(key);
+📘
+A note on security
+
+The primary benefit of monday code is a secure environment and peace of mind for our users. You must use the storage, logging, and enviornment management included in our SDK to be considered secure by our standards.
+
+For example, if you integrate with an external database to store customer data, your app will not be considered as secure as if you used the bundled storage.
+
+Declaring environment variables
+You can also declare environment variables in the CLI and then use them in your app. Here's an example:
+
+Using the CLI, run the command mapps code:env.
+Follow the steps to add a new environment variable. You will need to provide your app's version ID, the variable's key (eg SIGNING_SECRET) and the value (eg 12345abcd).
+Once you've added a variable, your app can access it with the following code:
+JavaScript
+
+import { EnvironmentVariablesManager } from '@mondaycom/apps-sdk';
+
+// Initialize the environment variables manager without injecting env into `process.env`
+let envManager = new EnvironmentVariablesManager();
+
+// Initialize the environment variables manager and inject env into `process.env`
+envManager = new EnvironmentVariablesManager({ updateProcessEnv: true });
+
+
+// Get cached environment variable
+const cachedValue = envManager.get(key, { invalidate: false });
+
+// Get the latest version of environment variable
+const latestValue = envManager.get(key);
+Using the logger
+monday code ships with a logger to store application logs. You can view these logs from the CLI and use them to troubleshoot with customers.
+
+Sending logs from your app
+You can start logging in your app using these methods:
+
+JavaScript
+
+import { Logger } from '@mondaycom/apps-sdk';
+
+const tag = 'app-2322-user-12344';
+// tag will be added to every logged message
+const logger = new Logger(tag);
+
+logger.info('POST request at /routes/run');
+logger.warn('Complexity limit reached. Retrying...');
+logger.debug(`account_info: ${JSON.stringify(account_data)}`);
+logger.error('Something went wrong', { error: new Error('error') }); // will include stack trace
+Accessing logs through the CLI
+You can access logs through the CLI in a number of ways. For example, you can filter for a specific date range, search term, or only return logs of a certain type (i.e., info, debug, error).
+
+mapps code:logs [--verbose] [--print-command] [-i <value>] [-t <value>] [-s <value>] [-f <value>] [-e <value>] [-r <value>]
+
+Updated about 1 month ago
+
+WHAT’S NEXT
+Done? Check out how to get ready for listing in the app marketplace.
+
+Submit to the app marketplace
+App listing guidelines
