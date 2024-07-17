@@ -1,4 +1,21 @@
-Template Set!
+## Overview
+
+PDF Data Extractor for Monday.com
+
+Streamline your document processing with our intelligent PDF Data Extractor. This app allows you to easily upload PDF documents and automatically extract key data points, transforming them into structured rows in your Monday.com boards.
+
+Key features:
+
+•	Drag-and-drop PDF upload
+•	AI-powered data extraction and organization
+•	Automatic creation of new rows based on PDF content
+•	Intelligent mapping of data to existing board structure
+•	Seamless integration with Monday.com's Main Table view
+
+Perfect for businesses dealing with invoices, reports, or any standardized PDF documents. Save time, reduce errors, and keep your projects up-to-date effortlessly.
+
+
+
 
 Developing locally
 Some of the examples in this repository require you to run a local server and expose it to the internet. To do so, you can either:
