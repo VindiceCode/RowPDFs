@@ -2,6 +2,7 @@
 */**/node_modules
 apps/*/build
 apps/*/.idea
+.env
 
 # Logs
 */**/logs

@@ -1,0 +1,3 @@
+when npm install a test app from welcome-apps -
+\
+npm warn deprecated querystring@0.2.1: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
